@@ -2021,6 +2021,9 @@ def test_algebraic():
     assert ask(Q.algebraic(x), Q.transcendental(x)) is False
     assert ask(Q.transcendental(x), Q.algebraic(x)) is False
 
+    e = Symbol('e', algebraic=True)
+    assert ask(Q.algebraic(Pow(1, e, evaluate=False))) is True
+
 
 def test_global():
     """Test ask with global assumptions"""
