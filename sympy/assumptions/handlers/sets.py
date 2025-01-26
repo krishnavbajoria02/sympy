@@ -744,7 +744,7 @@ def _(expr, assumptions):
             return ask(~Q.nonzero(expr.exp), assumptions)
         return
     if expr.exp.is_Rational:
-        return ask(Q.algebraic(expr.base), assumptions):
+        return ask(Q.algebraic(expr.base), assumptions)
     else:
         return False
 
