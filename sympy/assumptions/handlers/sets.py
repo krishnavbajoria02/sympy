@@ -737,12 +737,17 @@ def _(expr, assumptions):
 
 @AlgebraicPredicate.register(Pow) # type:ignore
 def _(expr, assumptions):
+    if expr.base == 1:
+        return True
     if expr.base == E:
         if ask(Q.algebraic(expr.exp), assumptions):
             return ask(~Q.nonzero(expr.exp), assumptions)
         return
-    if expr.exp.is_Rational and ask(Q.algebraic(expr.base), assumptions):
-     return True
+    if expr.exp.is_Rational:
+        return ask(Q.algebraic(expr.base), assumptions):
+    else:
+        return False
+
 
 @AlgebraicPredicate.register(Rational) # type:ignore
 def _(expr, assumptions):
