@@ -738,10 +738,9 @@ def _(expr, assumptions):
 @AlgebraicPredicate.register(Pow) # type:ignore
 def _(expr, assumptions):
     if expr.base == 1:
-        if ask(Q.real(expr.exp),assumptions):
-            return True
-        else:
+        if ask(Q.infinite(expr.exp), assumptions):
             return None
+        return True
     if expr.base == E:
         if ask(Q.algebraic(expr.exp), assumptions):
             return ask(~Q.nonzero(expr.exp), assumptions)
