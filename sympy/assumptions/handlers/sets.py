@@ -739,7 +739,7 @@ def _(expr, assumptions):
 def _(expr, assumptions):
     if expr.base == 1:
         if ask(Q.imaginary(expr.exp), assumptions):
-            return None  
+            return None
         return True 
     if expr.base == E:
         if ask(Q.algebraic(expr.exp), assumptions):
