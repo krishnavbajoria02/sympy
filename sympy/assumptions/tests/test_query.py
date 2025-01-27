@@ -2020,13 +2020,13 @@ def test_algebraic():
 
     assert ask(Q.algebraic(x), Q.transcendental(x)) is False
     assert ask(Q.transcendental(x), Q.algebraic(x)) is False
-    
+
     #https://github.com/sympy/sympy/issues/27445
     assert ask(Q.algebraic(Pow(1, x, evaluate=False)), Q.algebraic(x)) is True
     assert ask(Q.algebraic(Pow(x, y))) is None
     assert ask(Q.algebraic(Pow(1, x, evaluate=False))) is None
     assert ask(Q.algebraic(x**(pi*I))) is None
-    
+
 
 def test_global():
     """Test ask with global assumptions"""
