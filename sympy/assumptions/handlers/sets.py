@@ -748,6 +748,8 @@ def _(expr, assumptions):
     if ask(Q.rational(expr.exp),assumptions) and ask(Q.algebraic(expr.base),assumptions):
         return True
     elif ask(Q.rational(expr.exp),assumptions)==False or ask(Q.algebraic(expr.base),assumptions)==False:
+        if expr.exp.as_real_imag()[1]!=0:
+            return None
         return False
     else:
         return None
