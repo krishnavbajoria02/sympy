@@ -748,12 +748,10 @@ def _(expr, assumptions):
         return
     if ask(Q.rational(expr.exp),assumptions) and ask(Q.algebraic(expr.base),assumptions):
         return True
-    elif ask(Q.rational(expr.exp),assumptions)==None and ask(Q.algebraic(expr.base),assumptions)==None:
-        return None
-    else:
-        if ask(Q.imaginary(expr.exp),assumptions):
-            return None
+    elif ask(Q.rational(expr.exp),assumptions)==False or ask(Q.algebraic(expr.base),assumptions)==False:
         return False
+    else:
+        return None
 
 
 @AlgebraicPredicate.register(Rational) # type:ignore
