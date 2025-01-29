@@ -750,7 +750,7 @@ def _(expr, assumptions):
     if exp_rational and base_algebraic:
         return True
     elif exp_rational is False or base_algebraic is False:
-        if expr.exp.as_real_imag()[1]!=0:
+        if ask(Q.imaginary(expr.exp), assumptions):
             return None
         return False
 
