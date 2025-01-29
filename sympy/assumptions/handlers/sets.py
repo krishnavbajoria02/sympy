@@ -745,15 +745,14 @@ def _(expr, assumptions):
         if ask(Q.algebraic(expr.exp), assumptions):
             return ask(~Q.nonzero(expr.exp), assumptions)
         return
-    if ask(Q.rational(expr.exp),assumptions) and ask(Q.algebraic(expr.base),assumptions):
+    exp_rational = ask(Q.rational(expr.exp), assumptions)
+    base_algebraic = ask(Q.algebraic(expr.base), assumptions)
+    if exp_rational and base_algebraic:
         return True
-    elif ask(Q.rational(expr.exp),assumptions)==False or ask(Q.algebraic(expr.base),assumptions)==False:
+    elif exp_rational is False or base_algebraic is False:
         if expr.exp.as_real_imag()[1]!=0:
             return None
         return False
-    else:
-        return None
-
 
 @AlgebraicPredicate.register(Rational) # type:ignore
 def _(expr, assumptions):
