@@ -747,7 +747,9 @@ def _(expr, assumptions):
     if base_algebraic and exp_algebraic:
       if exp_rational:
           return True
-      elif ask(Q.ne(expr.base,0)) and ask(Q.ne(expr.base,1)) and exp_rational is False:
+      # Check based on the Gelfond–Schneider theorem:
+      # If the base is algebraic and not equal to 0 or 1, and the exponent is irrational,then the result is transcendental.
+      elif ask(Q.ne(expr.base,0) & Q.ne(expr.base,1)) and exp_rational is False:
           return False
 
 @AlgebraicPredicate.register(Rational) # type:ignore
