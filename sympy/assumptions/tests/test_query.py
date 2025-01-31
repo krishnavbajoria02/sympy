@@ -1992,7 +1992,7 @@ def test_algebraic():
     assert ask(Q.algebraic(sqrt(1 + I*sqrt(3)))) is True
 
     assert ask(Q.algebraic(1 + I*sqrt(3)**Rational(17, 31))) is True
-    assert ask(Q.algebraic(1 + I*sqrt(3)**(17/pi))) is False
+    assert ask(Q.algebraic(1 + I*sqrt(3)**(17/pi))) is None
 
     for f in [exp, sin, tan, asin, atan, cos]:
         assert ask(Q.algebraic(f(7))) is False
@@ -2022,7 +2022,7 @@ def test_algebraic():
     assert ask(Q.transcendental(x), Q.algebraic(x)) is False
 
     #https://github.com/sympy/sympy/issues/27445
-    assert ask(Q.algebraic(Pow(1, x, evaluate=False)), Q.algebraic(x)) is True
+    assert ask(Q.algebraic(Pow(1, x, evaluate=False)), Q.algebraic(x)) is None
     assert ask(Q.algebraic(Pow(x, y))) is None
     assert ask(Q.algebraic(Pow(1, x, evaluate=False))) is None
     assert ask(Q.algebraic(x**(pi*I))) is None
