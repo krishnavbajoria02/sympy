@@ -401,7 +401,7 @@ def test_pi():
     assert ask(Q.commutative(z)) is True
     assert ask(Q.integer(z)) is False
     assert ask(Q.rational(z)) is False
-    assert ask(Q.algebraic(z)) is False
+    assert ask(Q.algebraic(z)) is None
     assert ask(Q.real(z)) is True
     assert ask(Q.complex(z)) is True
     assert ask(Q.irrational(z)) is True
@@ -420,7 +420,7 @@ def test_pi():
     assert ask(Q.commutative(z)) is True
     assert ask(Q.integer(z)) is False
     assert ask(Q.rational(z)) is False
-    assert ask(Q.algebraic(z)) is False
+    assert ask(Q.algebraic(z)) is None
     assert ask(Q.real(z)) is True
     assert ask(Q.complex(z)) is True
     assert ask(Q.irrational(z)) is True
@@ -2013,7 +2013,7 @@ def test_algebraic():
         assert ask(Q.algebraic(h(7, evaluate=False))) is False
         assert ask(Q.algebraic(h(x)), Q.algebraic(x)) is False
 
-    assert ask(Q.algebraic(sqrt(sin(7)))) is False
+    assert ask(Q.algebraic(sqrt(sin(7)))) is None
     assert ask(Q.algebraic(sqrt(y + I*sqrt(7)))) is None
 
     assert ask(Q.algebraic(2.47)) is True
