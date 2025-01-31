@@ -741,6 +741,10 @@ def _(expr, assumptions):
         if ask(Q.algebraic(expr.exp), assumptions):
             return ask(~Q.nonzero(expr.exp), assumptions)
         return
+    if expr.base == pi:
+        if ask(Q.integer(expr.exp), assumptions) and ask(Q.positive(expr.exp), assumptions):
+            return True
+        return
     exp_rational = ask(Q.rational(expr.exp), assumptions)
     base_algebraic = ask(Q.algebraic(expr.base), assumptions)
     exp_algebraic = ask(Q.algebraic(expr.exp),assumptions)
