@@ -97,6 +97,15 @@ def test_MpmathPrinter():
     assert p.doprint(loggamma(x)) == 'mpmath.loggamma(x)'
 
 
+def test_cmath_printer():
+    printer = CmathPrinter()
+
+    assert printer.doprint(sympy.sqrt(x)) == "cmath.sqrt(x)"
+    assert printer.doprint(sympy.log(x)) == "cmath.log(x)"
+    assert printer.doprint(sympy.sin(x)) == "cmath.sin(x)"
+    assert printer.doprint(sympy.exp(x)) == "cmath.exp(x)"
+
+
 def test_NumPyPrinter():
     from sympy.core.function import Lambda
     from sympy.matrices.expressions.adjoint import Adjoint
