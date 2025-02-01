@@ -14,7 +14,7 @@ from sympy.logic import And, Or
 from sympy.matrices import SparseMatrix, MatrixSymbol, Identity
 from sympy.printing.codeprinter import PrintMethodNotImplementedError
 from sympy.printing.pycode import (
-    MpmathPrinter, PythonCodePrinter, pycode, SymPyPrinter
+    MpmathPrinter, CmathPrinter, PythonCodePrinter, pycode, SymPyPrinter
 )
 from sympy.printing.tensorflow import TensorflowPrinter
 from sympy.printing.numpy import NumPyPrinter, SciPyPrinter
@@ -97,7 +97,7 @@ def test_MpmathPrinter():
     assert p.doprint(loggamma(x)) == 'mpmath.loggamma(x)'
 
 
-def test_cmath_printer():
+def test_CmathPrinter():
     printer = CmathPrinter()
 
     assert printer.doprint(sympy.sqrt(x)) == "cmath.sqrt(x)"
