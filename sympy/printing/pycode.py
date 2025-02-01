@@ -764,6 +764,57 @@ for k in _known_constants_mpmath:
     setattr(MpmathPrinter, '_print_%s' % k, _print_known_const)
 
 
+_known_functions_cmath = {
+    'sqrt': 'sqrt',
+    'log': 'log',
+    'log10': 'log10',
+    'exp': 'exp',
+    'cos': 'cos',
+    'sin': 'sin',
+    'tan': 'tan',
+    'acos': 'acos',
+    'asin': 'asin',
+    'atan': 'atan',
+    'cosh': 'cosh',
+    'sinh': 'sinh',
+    'tanh': 'tanh',
+    'acosh': 'acosh',
+    'asinh': 'asinh',
+    'atanh': 'atanh'
+}
+
+_known_constants_cmath = {
+    'Pi': 'pi',
+    'E': 'e',
+    'Infinity': 'inf',
+    'NegativeInfinity': '-inf',
+}
+
+
+class CmathPrinter(PythonCodePrinter):
+    """Printer for the cmath module"""
+    printmethod = "_cmathcode"
+    language = "Python with cmath"
+
+    _kf = dict(chain(_known_functions_cmath.items()))
+    _kc = {k: 'cmath.' + v for k, v in _known_constants_cmath.items()}
+
+    def _print_Pow(self, expr, rational=False):
+        """Handle power expressions, ensuring sqrt uses cmath.sqrt"""
+        return self._hprint_Pow(expr, rational=rational, sqrt='cmath.sqrt')
+
+    def _print_Float(self, e):
+        """Ensure floating-point values are correctly printed"""
+        return '{func}({val})'.format(func=self._module_format('cmath.mpf'), val=self._print(e))
+
+# Register known functions
+for k in CmathPrinter._kf:
+    setattr(CmathPrinter, '_print_%s' % k, PythonCodePrinter._print_known_func)
+
+for k in _known_constants_cmath:
+    setattr(CmathPrinter, '_print_%s' % k, PythonCodePrinter._print_known_const)
+
+
 class SymPyPrinter(AbstractPythonCodePrinter):
 
     language = "Python with SymPy"
