@@ -1,6 +1,6 @@
-from __future__ import annotations
-from typing import Callable, TYPE_CHECKING
-from itertools import product
+# from __future__ import annotations
+# from typing import Callable, TYPE_CHECKING
+# from itertools import product
 
 from .sympify import _sympify
 from .cache import cacheit
