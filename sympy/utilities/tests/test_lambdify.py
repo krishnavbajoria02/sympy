@@ -5,6 +5,7 @@ import linecache
 import gc
 
 import mpmath
+import cmath
 
 from sympy.testing.pytest import raises, warns_deprecated_sympy
 from sympy.concrete.summations import Sum
@@ -215,6 +216,13 @@ def test_mpmath_lambda():
     assert abs(ans2a - ref2) < 1e-51
     assert abs(ans2b - ref2) < 1e-67
     assert abs(ans2c - ref2) < 1e-80
+
+
+def test_cmath_lambda():
+    f = lambdify([], sympy.sqrt(-1), "cmath")
+    assert f() == cmath.sqrt(-1)
+    f = lambdify([], sympy.log(-1), "cmath")
+    assert f() == cmath.log(-1)
 
 
 @conserve_mpmath_dps
