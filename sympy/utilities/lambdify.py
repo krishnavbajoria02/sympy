@@ -29,6 +29,7 @@ __doctest_requires__ = {('lambdify',): ['numpy', 'tensorflow']}
 # by simple variable maps, like I => 1j
 MATH_DEFAULT: dict[str, Any] = {}
 MPMATH_DEFAULT: dict[str, Any] = {}
+CMATH_DEFAULT: dict[str, Any] = {}
 NUMPY_DEFAULT: dict[str, Any] = {"I": 1j}
 SCIPY_DEFAULT: dict[str, Any] = {"I": 1j}
 CUPY_DEFAULT: dict[str, Any] = {"I": 1j}
@@ -43,6 +44,7 @@ NUMEXPR_DEFAULT: dict[str, Any] = {}
 
 MATH = MATH_DEFAULT.copy()
 MPMATH = MPMATH_DEFAULT.copy()
+CMATH = CMATH_DEFAULT.copy()
 NUMPY = NUMPY_DEFAULT.copy()
 SCIPY = SCIPY_DEFAULT.copy()
 CUPY = CUPY_DEFAULT.copy()
@@ -92,6 +94,25 @@ MPMATH_TRANSLATIONS = {
     "betainc_regularized": "betainc",
 }
 
+CMATH_TRANSLATIONS = {
+    "Abs": "fabs",  # Example: Map SymPy's Abs to cmath's fabs
+    "exp": "exp",
+    "log": "log",
+    "sqrt": "sqrt",
+    "sin": "sin",
+    "cos": "cos",
+    "tan": "tan",
+    "asin": "asin",
+    "acos": "acos",
+    "atan": "atan",
+    "sinh": "sinh",
+    "cosh": "cosh",
+    "tanh": "tanh",
+    "asinh": "asinh",
+    "acosh": "acosh",
+    "atanh": "atanh",
+}
+
 NUMPY_TRANSLATIONS: dict[str, str] = {
     "Heaviside": "heaviside",
 }
@@ -110,6 +131,7 @@ NUMEXPR_TRANSLATIONS: dict[str, str] = {}
 MODULES = {
     "math": (MATH, MATH_DEFAULT, MATH_TRANSLATIONS, ("from math import *",)),
     "mpmath": (MPMATH, MPMATH_DEFAULT, MPMATH_TRANSLATIONS, ("from mpmath import *",)),
+    "cmath": (CMATH, CMATH_DEFAULT, CMATH_TRANSLATIONS, ("from mpmath import *",)),
     "numpy": (NUMPY, NUMPY_DEFAULT, NUMPY_TRANSLATIONS, ("import numpy; from numpy import *; from numpy.linalg import *",)),
     "scipy": (SCIPY, SCIPY_DEFAULT, SCIPY_TRANSLATIONS, ("import scipy; import numpy; from scipy.special import *",)),
     "cupy": (CUPY, CUPY_DEFAULT, CUPY_TRANSLATIONS, ("import cupy",)),
@@ -129,7 +151,7 @@ def _import(module, reload=False):
     Creates a global translation dictionary for module.
 
     The argument module has to be one of the following strings: "math",
-    "mpmath", "numpy", "sympy", "tensorflow", "jax".
+    "mpmath", "cmath", "numpy", "sympy", "tensorflow", "jax".
     These dictionaries map names of Python functions to their equivalent in
     other modules.
     """
@@ -774,7 +796,7 @@ def lambdify(args, expr, modules=None, printer=None, use_imps=True,
                 # Use either numpy (if available) or python.math where possible.
                 # XXX: This leads to different behaviour on different systems and
                 #      might be the reason for irreproducible errors.
-                modules = ["math", "mpmath", "sympy"]
+                modules = ["math", "mpmath", "cmath", "sympy"]
             else:
                 modules = ["numpy"]
         else:
@@ -809,6 +831,8 @@ def lambdify(args, expr, modules=None, printer=None, use_imps=True,
     if printer is None:
         if _module_present('mpmath', namespaces):
             from sympy.printing.pycode import MpmathPrinter as Printer # type: ignore
+        elif _module_present('cmath', namespaces):
+            from sympy.printing.pycode import CmathPrinter as Printer # type: ignore
         elif _module_present('scipy', namespaces):
             from sympy.printing.numpy import SciPyPrinter as Printer # type: ignore
         elif _module_present('numpy', namespaces):
