@@ -147,12 +147,16 @@ def _(expr, assumptions):
         if ask(Q.rational(x), assumptions):
             return ask(~Q.nonzero(x), assumptions)
         return
-
-    if ask(Q.integer(expr.exp), assumptions):
-        return ask(Q.rational(expr.base), assumptions)
-    elif ask(Q.rational(expr.exp), assumptions):
-        if ask(Q.prime(expr.base), assumptions):
-            return False
+    is_base_zero = ask(Q.eq(expr.base,0))
+    if is_base_zero is False:
+        if ask(Q.integer(expr.exp), assumptions):
+            return ask(Q.rational(expr.base), assumptions)
+        elif ask(Q.rational(expr.exp), assumptions):
+            if ask(Q.prime(expr.base), assumptions):
+                return False
+    else:
+        if is_base_zero is True and ask(Q.ne(expr.pow,0),assumptions):
+            return True
 
 @RationalPredicate.register_many(asin, atan, cos, sin, tan)
 def _(expr, assumptions):
