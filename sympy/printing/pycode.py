@@ -633,6 +633,62 @@ def pycode(expr, **settings):
     return PythonCodePrinter(settings).doprint(expr)
 
 
+from itertools import chain
+from sympy.printing.pycode import PythonCodePrinter
+
+_known_functions_cmath = {
+    'sqrt': 'sqrt',
+    'log': 'log',
+    'log10': 'log10',
+    'exp': 'exp',
+    'cos': 'cos',
+    'sin': 'sin',
+    'tan': 'tan',
+    'acos': 'acos',
+    'asin': 'asin',
+    'atan': 'atan',
+    'cosh': 'cosh',
+    'sinh': 'sinh',
+    'tanh': 'tanh',
+    'acosh': 'acosh',
+    'asinh': 'asinh',
+    'atanh': 'atanh',
+    'phase': 'phase',
+    'polar': 'polar',
+    'rect': 'rect',
+}
+
+_known_constants_cmath = {
+    'Pi': 'pi',
+    'E': 'e',
+    'Infinity': 'inf',
+    'NegativeInfinity': '-inf',
+}
+
+class CmathPrinter(PythonCodePrinter):
+    """ Printer for Python's cmath module """
+    printmethod = "_cmathcode"
+    language = "Python with cmath"
+
+    _kf = dict(chain(
+        _known_functions_cmath.items()
+    ))
+
+    _kc = {k: 'cmath.' + v for k, v in _known_constants_cmath.items()}
+
+    def _print_Pow(self, expr, rational=False):
+        return self._hprint_Pow(expr, rational=rational, sqrt='cmath.sqrt')
+
+    def _print_Float(self, e):
+        return '{func}({val})'.format(func=self._module_format('cmath.mpf'), val=self._print(e))
+
+for k in CmathPrinter._kf:
+    setattr(CmathPrinter, '_print_%s' % k, CmathPrinter._print_known_func)
+
+for k in _known_constants_cmath:
+    setattr(CmathPrinter, '_print_%s' % k, CmathPrinter._print_known_const)
+
+
 _not_in_mpmath = 'log1p log2'.split()
 _in_mpmath = [(k, v) for k, v in _known_functions_math.items() if k not in _not_in_mpmath]
 _known_functions_mpmath = dict(_in_mpmath, **{
