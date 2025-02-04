@@ -5,6 +5,7 @@ import linecache
 import gc
 
 import mpmath
+import cmath
 
 from sympy.testing.pytest import raises, warns_deprecated_sympy
 from sympy.concrete.summations import Sum
