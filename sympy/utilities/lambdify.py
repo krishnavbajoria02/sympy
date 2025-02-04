@@ -809,6 +809,8 @@ def lambdify(args, expr, modules=None, printer=None, use_imps=True,
     if printer is None:
         if _module_present('mpmath', namespaces):
             from sympy.printing.pycode import MpmathPrinter as Printer # type: ignore
+        elif _module_present('cmath', namespaces):
+            from sympy.printing.pycode import CmathPrinter as Printer # type: ignore
         elif _module_present('scipy', namespaces):
             from sympy.printing.numpy import SciPyPrinter as Printer # type: ignore
         elif _module_present('numpy', namespaces):
