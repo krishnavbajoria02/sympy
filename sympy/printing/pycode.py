@@ -688,6 +688,10 @@ class CmathPrinter(PythonCodePrinter):
             return f"cmath.{self._kf[func_name]}({', '.join(map(self._print, expr.args))})"
         return super()._print_Function(expr)
 
+    def _print_known_const(self, expr):
+    return self._kc[expr.__class__.__name__]
+
+
 for k in CmathPrinter._kf:
     setattr(CmathPrinter, '_print_%s' % k, CmathPrinter._print_known_func)
 
