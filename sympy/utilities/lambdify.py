@@ -154,8 +154,6 @@ def _import(module, reload=False):
     other modules.
     """
     try:
-        print(f"Loading module: {module}")
-        print("MODULES keys:", MODULES.keys())
         namespace, namespace_default, translations, import_commands = MODULES[
             module]
     except KeyError:
