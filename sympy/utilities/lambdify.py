@@ -62,7 +62,6 @@ MATH_TRANSLATIONS = {
 }
 
 CMATH_TRANSLATIONS = {
-    "exp": "exp",
     "log": "log",
     "sqrt": "sqrt",
     "sin": "sin",
