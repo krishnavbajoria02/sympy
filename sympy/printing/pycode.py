@@ -682,6 +682,12 @@ class CmathPrinter(PythonCodePrinter):
     def _print_Float(self, e):
         return '{func}({val})'.format(func=self._module_format('cmath.mpf'), val=self._print(e))
 
+    def _print_known_func(self, expr):
+        func_name = expr.func.__name__
+        if func_name in self._kf:
+            return f"cmath.{self._kf[func_name]}({', '.join(map(self._print, expr.args))})"
+        return super()._print_Function(expr)
+
 for k in CmathPrinter._kf:
     setattr(CmathPrinter, '_print_%s' % k, CmathPrinter._print_known_func)
 
