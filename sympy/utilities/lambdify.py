@@ -154,6 +154,15 @@ def _import(module, reload=False):
     These dictionaries map names of Python functions to their equivalent in
     other modules.
     """
+    if module == "cmath":
+        print("Manually importing cmath")
+        from cmath import sqrt, log, exp, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh
+        namespace.update({
+            "sqrt": sqrt, "log": log, "exp": exp, "sin": sin, "cos": cos, "tan": tan,
+            "asin": asin, "acos": acos, "atan": atan, "sinh": sinh, "cosh": cosh, "tanh": tanh,
+            "asinh": asinh, "acosh": acosh, "atanh": atanh
+        })
+        continue
     try:
         print(f"Loading module: {module}")
         print("MODULES keys:", MODULES.keys())
