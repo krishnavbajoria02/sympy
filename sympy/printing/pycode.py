@@ -689,7 +689,7 @@ class CmathPrinter(PythonCodePrinter):
         return super()._print_Function(expr)
 
     def _print_known_const(self, expr):
-    return self._kc[expr.__class__.__name__]
+        return self._kc[expr.__class__.__name__]
 
 
 for k in CmathPrinter._kf:
