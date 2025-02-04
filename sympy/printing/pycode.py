@@ -639,8 +639,6 @@ from sympy.printing.pycode import PythonCodePrinter
 _known_functions_cmath = {
     'sqrt': 'sqrt',
     'log': 'log',
-    'log10': 'log10',
-    'exp': 'exp',
     'cos': 'cos',
     'sin': 'sin',
     'tan': 'tan',
@@ -653,9 +651,6 @@ _known_functions_cmath = {
     'acosh': 'acosh',
     'asinh': 'asinh',
     'atanh': 'atanh',
-    'phase': 'phase',
-    'polar': 'polar',
-    'rect': 'rect',
 }
 
 _known_constants_cmath = {
