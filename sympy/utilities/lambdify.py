@@ -77,7 +77,7 @@ CMATH_TRANSLATIONS = {
     "acosh": "acosh",
     "atanh": "atanh"
 }
-    
+
 # NOTE: This dictionary is reused in Function._eval_evalf to allow subclasses
 # of Function to automatically evalf.
 MPMATH_TRANSLATIONS = {
