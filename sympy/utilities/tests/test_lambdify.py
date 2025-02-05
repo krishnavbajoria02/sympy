@@ -320,6 +320,30 @@ def test_cmath_log():
     assert abs(f(-1) - cmath.log(-1)) < 1e-15
 
 
+def test_cmath_sinh():
+    f = lambdify(x, sinh(x), "cmath")
+    assert abs(f(0) - cmath.sinh(0)) < 1e-15
+    assert abs(f(pi) - cmath.sinh(pi)) < 1e-15
+    assert abs(f(-pi) - cmath.sinh(-pi)) < 1e-15
+    assert abs(f(1j) - cmath.sinh(1j)) < 1e-15
+
+
+def test_cmath_cosh():
+    f = lambdify(x, cosh(x), "cmath")
+    assert abs(f(0) - cmath.cosh(0)) < 1e-15
+    assert abs(f(pi) - cmath.cosh(pi)) < 1e-15
+    assert abs(f(-pi) - cmath.cosh(-pi)) < 1e-15
+    assert abs(f(1j) - cmath.cosh(1j)) < 1e-15
+
+
+def test_cmath_tanh():
+    f = lambdify(x, tanh(x), "cmath")
+    assert abs(f(0) - cmath.tanh(0)) < 1e-15
+    assert abs(f(pi) - cmath.tanh(pi)) < 1e-15
+    assert abs(f(-pi) - cmath.tanh(-pi)) < 1e-15
+    assert abs(f(1j) - cmath.tanh(1j)) < 1e-15
+
+
 def test_cmath_sin():
     f = lambdify(x, sin(x), "cmath")
     assert abs(f(0) - cmath.sin(0)) < 1e-15
