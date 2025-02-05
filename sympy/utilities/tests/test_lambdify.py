@@ -18,12 +18,12 @@ from sympy.functions.combinatorial.factorials import (RisingFactorial, factorial
 from sympy.functions.combinatorial.numbers import bernoulli, harmonic
 from sympy.functions.elementary.complexes import Abs, sign
 from sympy.functions.elementary.exponential import exp, log
-from sympy.functions.elementary.hyperbolic import acosh
+from sympy.functions.elementary.hyperbolic import asinh,acosh,atanh
 from sympy.functions.elementary.integers import floor
 from sympy.functions.elementary.miscellaneous import (Max, Min, sqrt)
 from sympy.functions.elementary.piecewise import Piecewise
 from sympy.functions.elementary.trigonometric import (asin, acos, atan, cos, cot, sin,
-                                                      sinc, tan, asinh, atanh)
+                                                      sinc, tan)
 from sympy.functions.special.bessel import (besseli, besselj, besselk, bessely, jn, yn)
 from sympy.functions.special.beta_functions import (beta, betainc, betainc_regularized)
 from sympy.functions.special.delta_functions import (Heaviside)
@@ -58,6 +58,7 @@ from sympy.utilities.decorator import conserve_mpmath_dps
 from sympy.utilities.exceptions import ignore_warnings
 from sympy.external import import_module
 from sympy.functions.special.gamma_functions import uppergamma, lowergamma
+from sympy import re,im
 
 
 import sympy
@@ -384,6 +385,38 @@ def test_cmath_atanh():
     assert abs(f(0.5) - cmath.atanh(0.5)) < 1e-15
     assert abs(f(-0.5) - cmath.atanh(-0.5)) < 1e-15
     assert abs(f(2) - cmath.atanh(2)) < 1e-15
+
+def test_lambdify_complex_trig():
+    # Define symbol
+    z = symbols('z')
+    # Explicit mappings for re and im
+    custom_mappings = {"re": lambda z: z.real, "im": lambda z: z.imag}
+    expr = cos(z) - cos(re(z)) * cosh(im(z)) + I * sin(re(z)) * sinh(im(z))
+    func = lambdify([z], expr, modules=[custom_mappings, "cmath", "math"])
+    hpi = math.pi / 2
+    assert func(hpi + 1j * hpi) == 0j
+
+    # Euler's Formula
+    func = lambdify([z], exp(I * z) - (cos(z) + I * sin(z)), modules=["cmath", "math"])
+    assert func(hpi) == 0j
+
+    # Hyperbolic Cosine Identity
+    func = lambdify([z], cosh(z) - (exp(z) + exp(-z)) / 2, modules=["cmath", "math"])
+    assert func(1j * hpi) == 0j
+
+    # Sine and Cosine Transformations
+    func_sin = lambdify([z], sin(I * z) - I * sinh(z), modules=["cmath", "math"])
+    assert func_sin(hpi) == 0j
+
+    func_cos = lambdify([z], cos(I * z) - cosh(z), modules=["cmath", "math"])
+    assert func_cos(hpi) == 0j
+
+    # Hyperbolic Definitions
+    func_sinh = lambdify([z], sinh(z) - (exp(z) - exp(-z)) / 2, modules=["cmath", "math"])
+    assert func_sinh(hpi) == 0j
+
+    func_cosh = lambdify([z], cosh(z) - (exp(z) + exp(-z)) / 2, modules=["cmath", "math"])
+    assert func_cosh(hpi) == 0j
 
 
 def test_issue_9334():
