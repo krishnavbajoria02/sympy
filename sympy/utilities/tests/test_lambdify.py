@@ -24,6 +24,7 @@ from sympy.functions.elementary.miscellaneous import (Max, Min, sqrt)
 from sympy.functions.elementary.piecewise import Piecewise
 from sympy.functions.elementary.trigonometric import (asin, acos, atan, cos, cot, sin,
                                                       sinc, tan)
+from sympy.functions import sinh,cosh,tanh
 from sympy.functions.special.bessel import (besseli, besselj, besselk, bessely, jn, yn)
 from sympy.functions.special.beta_functions import (beta, betainc, betainc_regularized)
 from sympy.functions.special.delta_functions import (Heaviside)
@@ -58,7 +59,6 @@ from sympy.utilities.decorator import conserve_mpmath_dps
 from sympy.utilities.exceptions import ignore_warnings
 from sympy.external import import_module
 from sympy.functions.special.gamma_functions import uppergamma, lowergamma
-from sympy import re,im
 
 
 import sympy
