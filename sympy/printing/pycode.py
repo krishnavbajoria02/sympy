@@ -637,6 +637,7 @@ from itertools import chain
 from sympy.printing.pycode import PythonCodePrinter
 
 _known_functions_cmath = {
+    'exp': 'exp',
     'sqrt': 'sqrt',
     'log': 'log',
     'cos': 'cos',
