@@ -5,6 +5,7 @@ import linecache
 import gc
 
 import mpmath
+import cmath
 
 from sympy.testing.pytest import raises, warns_deprecated_sympy
 from sympy.concrete.summations import Sum
@@ -299,6 +300,90 @@ def test_numexpr_printer():
         args = arg_tuple[:nargs]
         f = lambdify(args, ssym(*args), modules='numexpr')
         assert f(*(1, )*nargs) is not None
+
+
+def test_cmath_sqrt():
+    f = lambdify(x, sqrt(x), "cmath")
+    assert f(0) == 0
+    assert f(1) == 1
+    assert f(4) == 2
+    assert abs(f(2) - 1.414) < 0.001
+    assert f(-1) == 1j
+    assert f(-4) == 2j
+
+
+def test_cmath_log():
+    f = lambdify(x, log(x), "cmath")
+    assert abs(f(1) - 0) < 1e-15
+    assert abs(f(cmath.e) - 1) < 1e-15
+    assert abs(f(-1) - cmath.log(-1)) < 1e-15
+
+
+def test_cmath_sin():
+    f = lambdify(x, sin(x), "cmath")
+    assert abs(f(0) - cmath.sin(0)) < 1e-15
+    assert abs(f(pi) - cmath.sin(pi)) < 1e-15
+    assert abs(f(-pi) - cmath.sin(-pi)) < 1e-15
+    assert abs(f(1j) - cmath.sin(1j)) < 1e-15
+
+
+def test_cmath_cos():
+    f = lambdify(x, cos(x), "cmath")
+    assert abs(f(0) - cmath.cos(0)) < 1e-15
+    assert abs(f(pi) - cmath.cos(pi)) < 1e-15
+    assert abs(f(-pi) - cmath.cos(-pi)) < 1e-15
+    assert abs(f(1j) - cmath.cos(1j)) < 1e-15
+
+
+def test_cmath_tan():
+    f = lambdify(x, tan(x), "cmath")
+    assert abs(f(0) - cmath.tan(0)) < 1e-15
+    assert abs(f(1j) - cmath.tan(1j)) < 1e-15
+
+
+def test_cmath_asin():
+    f = lambdify(x, asin(x), "cmath")
+    assert abs(f(0) - cmath.asin(0)) < 1e-15
+    assert abs(f(1) - cmath.asin(1)) < 1e-15
+    assert abs(f(-1) - cmath.asin(-1)) < 1e-15
+    assert abs(f(2) - cmath.asin(2)) < 1e-15
+
+
+def test_cmath_acos():
+    f = lambdify(x, acos(x), "cmath")
+    assert abs(f(1) - cmath.acos(1)) < 1e-15
+    assert abs(f(-1) - cmath.acos(-1)) < 1e-15
+    assert abs(f(2) - cmath.acos(2)) < 1e-15
+
+
+def test_cmath_atan():
+    f = lambdify(x, atan(x), "cmath")
+    assert abs(f(0) - cmath.atan(0)) < 1e-15
+    assert abs(f(1) - cmath.atan(1)) < 1e-15
+    assert abs(f(-1) - cmath.atan(-1)) < 1e-15
+    assert abs(f(2) - cmath.atan(2)) < 1e-15
+
+
+def test_cmath_asinh():
+    f = lambdify(x, asinh(x), "cmath")
+    assert abs(f(0) - cmath.asinh(0)) < 1e-15
+    assert abs(f(1) - cmath.asinh(1)) < 1e-15
+    assert abs(f(-1) - cmath.asinh(-1)) < 1e-15
+    assert abs(f(2) - cmath.asinh(2)) < 1e-15
+
+
+def test_cmath_acosh():
+    f = lambdify(x, acosh(x), "cmath")
+    assert abs(f(1) - cmath.acosh(1)) < 1e-15
+    assert abs(f(2) - cmath.acosh(2)) < 1e-15
+
+
+def test_cmath_atanh():
+    f = lambdify(x, atanh(x), "cmath")
+    assert abs(f(0) - cmath.atanh(0)) < 1e-15
+    assert abs(f(0.5) - cmath.atanh(0.5)) < 1e-15
+    assert abs(f(-0.5) - cmath.atanh(-0.5)) < 1e-15
+    assert abs(f(2) - cmath.atanh(2)) < 1e-15
 
 
 def test_issue_9334():
