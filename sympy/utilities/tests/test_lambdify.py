@@ -23,7 +23,7 @@ from sympy.functions.elementary.integers import floor
 from sympy.functions.elementary.miscellaneous import (Max, Min, sqrt)
 from sympy.functions.elementary.piecewise import Piecewise
 from sympy.functions.elementary.trigonometric import (asin, acos, atan, cos, cot, sin,
-                                                      sinc, tan, asinh, acosh, atanh)
+                                                      sinc, tan, asinh, atanh)
 from sympy.functions.special.bessel import (besseli, besselj, besselk, bessely, jn, yn)
 from sympy.functions.special.beta_functions import (beta, betainc, betainc_regularized)
 from sympy.functions.special.delta_functions import (Heaviside)
