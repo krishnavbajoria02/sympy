@@ -410,7 +410,7 @@ def test_cmath_atanh():
     assert abs(f(-0.5) - cmath.atanh(-0.5)) < 1e-15
     assert abs(f(2) - cmath.atanh(2)) < 1e-15
 
-def test_lambdify_complex_trig():
+def test_lambdify_complex_identities():
     # Define symbol
     z = symbols('z')
     # Explicit mappings for re and im
@@ -424,20 +424,30 @@ def test_lambdify_complex_trig():
     func = lambdify([z], exp(I * z) - (cos(z) + I * sin(z)), modules=["cmath", "math"])
     assert func(hpi) == 0j
 
-    # Hyperbolic Cosine Identity
-    func = lambdify([z], cosh(z) - (exp(z) + exp(-z)) / 2, modules=["cmath", "math"])
-    assert func(1j * hpi) == 0j
+    # Exponential Identity: e^z = e^(Re(z)) * (cos(Im(z)) + i sin(Im(z)))
+    func_exp = lambdify([z], exp(z) - exp(re(z)) * (cos(im(z)) + I * sin(im(z))), 
+                        modules=[custom_mappings, "cmath", "math"])
+    assert func_exp(hpi + 1j * hpi) == 0j
 
-    # Sine and Cosine Transformations
-    func_sin = lambdify([z], sin(I * z) - I * sinh(z), modules=["cmath", "math"])
-    assert func_sin(hpi) == 0j
+    # Complex Cosine Identity: cos(z) = cos(Re(z)) * cosh(Im(z)) - i sin(Re(z)) * sinh(Im(z))
+    func_cos = lambdify([z], cos(z) - (cos(re(z)) * cosh(im(z)) - I * sin(re(z)) * sinh(im(z))), 
+                        modules=[custom_mappings, "cmath", "math"])
+    assert func_cos(hpi + 1j * hpi) == 0j
 
-    func_cos = lambdify([z], cos(I * z) - cosh(z), modules=["cmath", "math"])
-    assert func_cos(hpi) == 0j
+    # Complex Sine Identity: sin(z) = sin(Re(z)) * cosh(Im(z)) + i cos(Re(z)) * sinh(Im(z))
+    func_sin = lambdify([z], sin(z) - (sin(re(z)) * cosh(im(z)) + I * cos(re(z)) * sinh(im(z))), 
+                        modules=[custom_mappings, "cmath", "math"])
+    assert func_sin(hpi + 1j * hpi) == 0j
 
-    # Hyperbolic Definitions
-    func_sinh = lambdify([z], sinh(z) - (exp(z) - exp(-z)) / 2, modules=["cmath", "math"])
-    assert func_sinh(hpi) == 0j
+    # Complex Hyperbolic Cosine Identity: cosh(z) = cosh(Re(z)) * cos(Im(z)) + i sinh(Re(z)) * sin(Im(z))
+    func_cosh = lambdify([z], cosh(z) - (cosh(re(z)) * cos(im(z)) + I * sinh(re(z)) * sin(im(z))), 
+                         modules=[custom_mappings, "cmath", "math"])
+    assert func_cosh(hpi + 1j * hpi) == 0j
+
+    # Complex Hyperbolic Sine Identity: sinh(z) = sinh(Re(z)) * cos(Im(z)) + i cosh(Re(z)) * sin(Im(z))
+    func_sinh = lambdify([z], sinh(z) - (sinh(re(z)) * cos(im(z)) + I * cosh(re(z)) * sin(im(z))), 
+                         modules=[custom_mappings, "cmath", "math"])
+    assert func_sinh(hpi + 1j * hpi) == 0j
 
     func_cosh = lambdify([z], cosh(z) - (exp(z) + exp(-z)) / 2, modules=["cmath", "math"])
     assert func_cosh(hpi) == 0j
