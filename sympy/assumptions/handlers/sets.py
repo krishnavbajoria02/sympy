@@ -218,13 +218,15 @@ def _(expr, assumptions):
 
 @RealPredicate.register_many(ImaginaryUnit, Infinity, NegativeInfinity)
 def _(expr, assumptions):
+    print("YES WE ENTERED THIS FUNCTION real - imaginary unit ")
     return False
 
 @RealPredicate.register(Expr)
 def _(expr, assumptions):
+    print("YES WE ENTERED THIS FUNCTION expr one ")
     ret = expr.is_real
-    if ret is None:
-        raise MDNotImplementedError
+    # if ret is None:
+    #     raise MDNotImplementedError
     return ret
 
 @RealPredicate.register(Add)
@@ -244,18 +246,28 @@ def _(expr, assumptions):
     * Real*Imaginary          -> !Real
     * Imaginary*Imaginary     -> Real
     """
+    print(f"DEBUG: Entering RealPredicate.Mul() for expr={expr}, assumptions={assumptions}")
     if expr.is_number:
         return _RealPredicate_number(expr, assumptions)
     result = True
+    possible_zero = False
     for arg in expr.args:
         if ask(Q.real(arg), assumptions):
-            pass
+            if ask(Q.eq(arg,0),assumptions) is None:
+                possible_zero = None
+                print(f"Result  after Q.eq(arg,0) is {result} and possible zero is {possible_zero}")
         elif ask(Q.imaginary(arg), assumptions):
             result = result ^ True
         else:
-            break
-    else:
-        return result
+            print("breaking out")
+            return None
+    if result is False:
+            if possible_zero is None:
+                return None
+            else:
+                print(f"DEBUG: Found imaginary term in {expr.args}, returning False")
+                return False
+    return result
 
 @RealPredicate.register(Pow)
 def _(expr, assumptions):
@@ -497,6 +509,7 @@ def _Imaginary_number(expr, assumptions):
 
 @ImaginaryPredicate.register(ImaginaryUnit) # type:ignore
 def _(expr, assumptions):
+    print("YES WE ENTERED THIS FUNCTION imaginary - real unit ")
     return True
 
 @ImaginaryPredicate.register(Expr) # type:ignore
