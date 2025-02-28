@@ -169,6 +169,12 @@ def _(expr, assumptions):
             return True
         if ask(Q.eq(expr.base,1)):
             return True
+    if ask(Q.irrational(expr.base),assumptions):
+            from sympy import symbols
+            n=symbols('n')
+            if ask(Q.positive(1/expr.exp),assumptions):
+               if ask(Q.zero((1/expr.exp)-(1/n)),assumptions & Q.positive(n) & Q.integer(n)) is not False:
+                   return False
 
 @RationalPredicate.register_many(asin, atan, cos, sin, tan)
 def _(expr, assumptions):
