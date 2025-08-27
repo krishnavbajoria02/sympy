@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Krishnav Bajoria — Portfolio</title>
+    <meta name="description" content="Portfolio of Krishnav Bajoria — Web3, Blockchain, Math & Computing @ IIT BHU" />
+    <meta property="og:title" content="Krishnav Bajoria — Portfolio" />
+    <meta property="og:description" content="Web3 & Blockchain developer with contributions to SeedSigner." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/og-image.png" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="brand">
+                <a href="#" class="logo">KB</a>
+                <span class="name">Krishnav Bajoria</span>
+            </div>
+            <nav class="nav">
+                <a href="#about">About</a>
+                <a href="#seedsigner">SeedSigner</a>
+                <a href="#projects">Projects</a>
+                <a href="#resume">Resume</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero__content">
+                <div class="hero__text">
+                    <h1><span class="accent">Web3</span> & Blockchain Engineer</h1>
+                    <p class="subtitle">Mathematics & Computing @ IIT BHU • Open-source contributor • Focused on secure wallets and self-custody UX</p>
+                    <div class="cta">
+                        <a class="btn primary" href="#seedsigner">View SeedSigner PRs</a>
+                        <a class="btn secondary" href="#projects">See Projects</a>
+                    </div>
+                    <div class="links">
+                        <a href="https://www.linkedin.com/in/krishnav-bajoria/" target="_blank" rel="noreferrer">LinkedIn</a>
+                        <span>·</span>
+                        <a href="https://github.com/krishnavbajoria02" target="_blank" rel="noreferrer">GitHub</a>
+                    </div>
+                </div>
+                <div class="hero__visual" aria-hidden="true">
+                    <div class="orb orb--1"></div>
+                    <div class="orb orb--2"></div>
+                    <div class="orb orb--3"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About</h2>
+                <p>
+                    I am a third-year student at IIT BHU studying Mathematics & Computing. I build in the
+                    blockchain and Web3 space with a strong focus on security, UX, and real-world impact.
+                </p>
+                <ul class="tags">
+                    <li>Blockchain</li>
+                    <li>Web3</li>
+                    <li>Bitcoin</li>
+                    <li>Self-custody</li>
+                    <li>Wallet UX</li>
+                    <li>TypeScript</li>
+                    <li>Python</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="seedsigner" class="section section--alt">
+            <div class="container">
+                <div class="section__head">
+                    <h2>SeedSigner Contributions</h2>
+                    <p class="section__sub">Open-source PRs highlighting security and UX improvements for an air‑gapped Bitcoin signer.</p>
+                </div>
+                <div id="seedsigner-prs" class="grid"></div>
+                <div class="more">
+                    <a class="btn tertiary" target="_blank" rel="noreferrer" href="https://github.com/SeedSigner/seedsigner/pulls?q=is%3Apr+author%3Akrishnavbajoria02">View all PRs →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="grid">
+                    <article class="card">
+                        <h3>Chatbot QA Model</h3>
+                        <p>Retrieval-augmented QA pipeline demonstrating practical LLM deployment.</p>
+                        <div class="card__links">
+                            <a target="_blank" rel="noreferrer" href="https://github.com/krishnavbajoria02">Code</a>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <h3>Portfolio Site</h3>
+                        <p>Responsive, accessible, and fast website built with vanilla HTML/CSS/JS.</p>
+                        <div class="card__links">
+                            <a href="#">This site</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="resume" class="section section--alt">
+            <div class="container">
+                <h2>Resume</h2>
+                <p>Download my latest resume as PDF.</p>
+                <div class="cta">
+                    <a class="btn primary" href="resume/resume.pdf" download>Download Resume</a>
+                </div>
+                <p class="note">Place your file at <code>portfolio/resume/resume.pdf</code> to enable the download link.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Contact</h2>
+                <ul class="contact">
+                    <li><a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/krishnav-bajoria/">LinkedIn</a></li>
+                    <li><a target="_blank" rel="noreferrer" href="https://github.com/krishnavbajoria02">GitHub</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <span>© <span id="year"></span> Krishnav Bajoria</span>
+            <a class="top" href="#">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
+
